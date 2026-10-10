@@ -41,11 +41,7 @@ html, body {
     padding: 20px 16px 40px;
     min-height: 100vh;
 }
-.logo {
-    text-align: center;
-    margin-bottom: 30px;
-    animation: fadeIn 0.8s ease-out;
-}
+.logo { text-align: center; margin-bottom: 30px; }
 .logo h1 {
     font-size: 38px;
     font-weight: 900;
@@ -56,12 +52,7 @@ html, body {
     -webkit-text-fill-color: transparent;
     animation: shine 3s linear infinite;
 }
-.logo p {
-    color: #555;
-    font-size: 12px;
-    letter-spacing: 4px;
-    margin-top: 6px;
-}
+.logo p { color: #555; font-size: 12px; letter-spacing: 4px; margin-top: 6px; }
 @keyframes shine { to { background-position: 200% center; } }
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -95,21 +86,8 @@ html, body {
     margin-right: 16px;
     width: 30px;
     text-align: center;
-    transition: transform 0.3s;
 }
-.menu-btn:active .icon {
-    transform: scale(1.2) rotate(-5deg);
-}
-.menu-btn .arrow {
-    margin-left: auto;
-    color: #555;
-    font-size: 18px;
-    transition: transform 0.3s;
-}
-.menu-btn:active .arrow {
-    transform: translateX(4px);
-    color: #00e0ff;
-}
+.menu-btn .arrow { margin-left: auto; color: #555; font-size: 18px; }
 .menu-btn.admin {
     background: linear-gradient(135deg, rgba(0, 224, 255, 0.15), rgba(0, 150, 255, 0.15));
     border: 1px solid rgba(0, 224, 255, 0.4);
@@ -132,12 +110,8 @@ html, body {
     color: #fff;
     font-size: 14px;
     cursor: pointer;
-    transition: all 0.2s;
 }
-.back-btn:active {
-    transform: scale(0.95);
-    background: rgba(0, 224, 255, 0.15);
-}
+.back-btn:active { transform: scale(0.95); background: rgba(0, 224, 255, 0.15); }
 .page-title {
     font-size: 26px;
     font-weight: 800;
@@ -146,22 +120,14 @@ html, body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.page-desc {
-    color: #666;
-    font-size: 13px;
-    margin-bottom: 24px;
-    line-height: 1.5;
-}
+.page-desc { color: #666; font-size: 13px; margin-bottom: 24px; line-height: 1.5; }
 .card {
     padding: 18px;
     margin-bottom: 12px;
     background: rgba(20, 20, 20, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
-    transition: all 0.25s;
-    animation: fadeIn 0.5s ease-out backwards;
 }
-.card:active { transform: scale(0.98); }
 .card-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
 .card-desc { font-size: 13px; color: #777; margin-bottom: 14px; line-height: 1.5; }
 .card-price { font-size: 20px; font-weight: 800; color: #00e0ff; margin-bottom: 12px; }
@@ -175,8 +141,6 @@ html, body {
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.25s;
-    letter-spacing: 0.5px;
 }
 .buy-btn:active { transform: scale(0.97); filter: brightness(0.9); }
 .profile-card {
@@ -186,7 +150,6 @@ html, body {
     border-radius: 16px;
     margin-bottom: 20px;
     text-align: center;
-    animation: fadeIn 0.6s;
 }
 .profile-name { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
 .profile-id { font-size: 12px; color: #666; margin-bottom: 16px; }
@@ -411,14 +374,19 @@ textarea { min-height: 120px; text-transform: none; resize: vertical; }
 </div>
 
 <script>
-(function createStars() {
-    const c = document.getElementById('stars');
-    for (let i = 0; i < 60; i++) {
-        const s = document.createElement('div');
+var tg = window.Telegram ? window.Telegram.WebApp : null;
+var ADMIN_IDS = [1494459013, 6432939703];
+var USER_ID = 0;
+var IS_ADMIN = false;
+
+(function () {
+    var c = document.getElementById('stars');
+    for (var i = 0; i < 60; i++) {
+        var s = document.createElement('div');
         s.className = 'star';
         s.style.left = Math.random() * 100 + '%';
         s.style.top = Math.random() * 100 + '%';
-        const size = Math.random() * 2 + 1;
+        var size = Math.random() * 2 + 1;
         s.style.width = size + 'px';
         s.style.height = size + 'px';
         s.style.animationDelay = Math.random() * 3 + 's';
@@ -426,19 +394,14 @@ textarea { min-height: 120px; text-transform: none; resize: vertical; }
     }
 })();
 
-const tg = window.Telegram?.WebApp;
-const ADMIN_IDS = [1494459013, 6432939703];
-let USER_ID = 0;
-let IS_ADMIN = false;
-
 if (tg) {
     tg.ready();
     tg.expand();
     tg.setHeaderColor('#000000');
     tg.setBackgroundColor('#000000');
-    if (tg.initDataUnsafe?.user) {
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         USER_ID = tg.initDataUnsafe.user.id;
-        IS_ADMIN = ADMIN_IDS.includes(USER_ID);
+        IS_ADMIN = ADMIN_IDS.indexOf(USER_ID) !== -1;
     }
 }
 
@@ -450,53 +413,55 @@ function sendToBot(data) {
     try {
         tg.sendData(JSON.stringify(data));
         return true;
-    } catch(e) {
+    } catch (e) {
         alert('Ошибка: ' + e.message);
         return false;
     }
 }
 
 function buy(payload) {
-    if (tg) tg.HapticFeedback?.notificationOccurred('success');
-    if (sendToBot({action: 'buy', payload: payload})) tg.close();
+    if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+    if (sendToBot({ action: 'buy', payload: payload })) {
+        tg.close();
+    }
 }
 
 function activateKey() {
-    const k = document.getElementById('keyInput').value.trim().toUpperCase();
+    var k = document.getElementById('keyInput').value.trim().toUpperCase();
     if (!k) { alert('Введи ключ!'); return; }
-    if (sendToBot({action: 'activate', code: k})) tg.close();
+    if (sendToBot({ action: 'activate', code: k })) tg.close();
 }
 
 function sendSupport() {
-    const t = document.getElementById('supportInput').value.trim();
+    var t = document.getElementById('supportInput').value.trim();
     if (!t) { alert('Напиши вопрос!'); return; }
-    if (sendToBot({action: 'support', text: t})) tg.close();
+    if (sendToBot({ action: 'support', text: t })) tg.close();
 }
 
 function shareRef() {
     if (!USER_ID) return;
-    const refUrl = 'https://t.me/XMPrivateBot?start=ref_' + USER_ID;
+    var refUrl = 'https://t.me/XMPrivateBot?start=ref_' + USER_ID;
     if (tg) tg.openTelegramLink('https://t.me/share/url?url=' + encodeURIComponent(refUrl));
 }
 
 function sendAction(a) {
-    if (sendToBot({action: a})) tg.close();
+    if (sendToBot({ action: a })) tg.close();
 }
 
 function adminAction(type) {
     if (!IS_ADMIN) { alert('Нет доступа'); return; }
-    if (sendToBot({action: 'admin', type: type})) tg.close();
+    if (sendToBot({ action: 'admin', type: type })) tg.close();
 }
 
-const FAQ_DATA = [
-    ["Что такое приватка?", "Общение с владельцами, помощь, ролики, конкурсы."],
-    ["Как оплатить?", "Через Telegram Stars."],
-    ["Как долго ждать?", "Приватка и конфиг — мгновенно."],
-    ["Что после оплаты?", "Получишь ключ."],
-    ["Что за конфиг?", "Настройки с биндами."],
-    ["Не пришёл товар?", "Напиши в поддержку."],
-    ["Что за баллы?", "5 баллов за друга."],
-    ["Как пригласить друга?", "В профиле — кнопка."]
+var FAQ_DATA = [
+    ['Что такое приватка?', 'Общение с владельцами, помощь, ролики, конкурсы.'],
+    ['Как оплатить?', 'Через Telegram Stars.'],
+    ['Как долго ждать?', 'Приватка и конфиг — мгновенно.'],
+    ['Что после оплаты?', 'Получишь ключ.'],
+    ['Что за конфиг?', 'Настройки с биндами.'],
+    ['Не пришёл товар?', 'Напиши в поддержку.'],
+    ['Что за баллы?', '5 баллов за друга.'],
+    ['Как пригласить друга?', 'В профиле — кнопка.']
 ];
 
 function loadProfile() {
@@ -504,43 +469,45 @@ function loadProfile() {
         document.getElementById('profileContent').innerHTML = '<div class="page-desc">Открой через Telegram</div>';
         return;
     }
-    document.getElementById('profileContent').innerHTML =
-        '<div class="profile-card">' +
-            '<div class="profile-name">ID: ' + USER_ID + '</div>' +
-            '<div class="profile-id">' + (IS_ADMIN ? '👑 Админ' : '👤 Юзер') + '</div>' +
-        '</div>' +
-        '<div class="card">' +
-            '<div class="card-title">👥 Пригласить друга</div>' +
-            '<div class="card-desc">За каждого +5 баллов</div>' +
-            '<button class="buy-btn" onclick="shareRef()">Поделиться</button>' +
-        '</div>' +
-        '<div class="card">' +
-            '<div class="card-title">🎁 Магазин промокодов</div>' +
-            '<button class="buy-btn" onclick="sendAction(\'promo_shop\')">Открыть</button>' +
-        '</div>';
+    var html = '';
+    html += '<div class="profile-card">';
+    html += '<div class="profile-name">ID: ' + USER_ID + '</div>';
+    html += '<div class="profile-id">' + (IS_ADMIN ? '👑 Админ' : '👤 Юзер') + '</div>';
+    html += '</div>';
+    html += '<div class="card">';
+    html += '<div class="card-title">👥 Пригласить друга</div>';
+    html += '<div class="card-desc">За каждого +5 баллов</div>';
+    html += '<button class="buy-btn" onclick="shareRef()">Поделиться</button>';
+    html += '</div>';
+    html += '<div class="card">';
+    html += '<div class="card-title">🎁 Магазин промокодов</div>';
+    html += '<button class="buy-btn" onclick="sendAction(\'promo_shop\')">Открыть</button>';
+    html += '</div>';
+    document.getElementById('profileContent').innerHTML = html;
 }
 
 function loadFaq() {
-    const c = document.getElementById('faqContent');
+    var c = document.getElementById('faqContent');
     c.className = '';
-    let html = '';
-    for (const item of FAQ_DATA) {
-        html += '<div class="card"><div class="card-title">❓ ' + item[0] + '</div><div class="card-desc">' + item[1] + '</div></div>';
+    var html = '';
+    for (var i = 0; i < FAQ_DATA.length; i++) {
+        html += '<div class="card"><div class="card-title">❓ ' + FAQ_DATA[i][0] + '</div><div class="card-desc">' + FAQ_DATA[i][1] + '</div></div>';
     }
     c.innerHTML = html;
 }
 
 function loadReviews() {
-    const c = document.getElementById('reviewsContent');
+    var c = document.getElementById('reviewsContent');
     c.className = '';
     c.innerHTML = '<div class="card"><div class="card-title">⭐ Отзывы</div><div class="card-desc">Пока пусто.</div></div>';
 }
 
 function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    var pages = document.querySelectorAll('.page');
+    for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
     document.getElementById(id).classList.add('active');
-    if (tg) tg.HapticFeedback?.impactOccurred('light');
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     if (id === 'profile') loadProfile();
     if (id === 'faq') loadFaq();
     if (id === 'reviews') loadReviews();
@@ -552,3 +519,4 @@ if (IS_ADMIN) {
 </script>
 </body>
     </html>
+    

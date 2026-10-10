@@ -16,7 +16,6 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
 .logo h1 { font-size: 38px; font-weight: 900; letter-spacing: 3px; background: linear-gradient(90deg, #fff 0%, #00e0ff 50%, #fff 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shine 3s linear infinite; }
 .logo p { color: #555; font-size: 12px; letter-spacing: 4px; margin-top: 6px; }
 @keyframes shine { to { background-position: 200% center; } }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .menu-btn { display: flex; align-items: center; width: 100%; padding: 18px 20px; margin-bottom: 10px; background: rgba(20, 20, 20, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; backdrop-filter: blur(10px); text-align: left; }
 .menu-btn:active { transform: scale(0.97); background: rgba(0, 224, 255, 0.1); border-color: rgba(0, 224, 255, 0.4); }
 .menu-btn .icon { font-size: 24px; margin-right: 16px; width: 30px; text-align: center; }
@@ -39,7 +38,9 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
 .loader { text-align: center; padding: 40px; color: #555; }
 input, textarea { width: 100%; padding: 14px; background: #111; border: 1px solid #333; border-radius: 10px; color: #fff; font-size: 16px; margin-bottom: 12px; outline: none; font-family: inherit; }
 textarea { min-height: 120px; }
-.debug { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.95); color: #0f0; font-family: monospace; font-size: 11px; padding: 8px; z-index: 9999; max-height: 200px; overflow-y: auto; border-top: 2px solid #0f0; }
+.notif { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #00e0ff, #0099ff); color: #000; padding: 20px; text-align: center; font-weight: 800; font-size: 16px; z-index: 99999; animation: slideDown 0.3s ease-out; }
+.notif span { display: block; font-size: 13px; font-weight: 600; opacity: 0.8; margin-top: 4px; }
+@keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 </style>
 </head>
 <body>
@@ -142,18 +143,12 @@ textarea { min-height: 120px; }
     </div>
 </div>
 
-<div id="debug" class="debug">Загрузка...</div>
-
 <script>
-var debugEl = document.getElementById('debug');
-var debugLines = [];
-function dbg(msg) {
-    debugLines.push(msg);
-    if (debugLines.length > 10) debugLines.shift();
-    debugEl.innerHTML = debugLines.join('<br>');
-}
+var tg = window.Telegram ? window.Telegram.WebApp : null;
+var ADMIN_IDS = [1494459013, 6432939703];
+var USER_ID = 0;
+var IS_ADMIN = false;
 
-// Звёзды
 (function () {
     var c = document.getElementById('stars');
     for (var i = 0; i < 60; i++) {
@@ -169,73 +164,36 @@ function dbg(msg) {
     }
 })();
 
-// Telegram
-var tg = window.Telegram ? window.Telegram.WebApp : null;
-var ADMIN_IDS = [1494459013, 6432939703];
-var USER_ID = 0;
-var IS_ADMIN = false;
-
-dbg('1. Script loaded');
-dbg('2. tg = ' + (tg ? 'OK' : 'NULL'));
-
 if (tg) {
     tg.ready();
     tg.expand();
     if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
         USER_ID = tg.initDataUnsafe.user.id;
         IS_ADMIN = ADMIN_IDS.indexOf(USER_ID) !== -1;
-        dbg('3. User ID = ' + USER_ID);
-        dbg('4. Is Admin = ' + IS_ADMIN);
-    } else {
-        dbg('3. initDataUnsafe = NULL');
-    }
-    dbg('5. sendData доступен: ' + (typeof tg.sendData === 'function'));
-}
-
-function sendToBot(data) {
-    dbg('→ sendToBot вызван');
-    if (!tg) {
-        dbg('❌ tg = NULL');
-        alert('Открой через Telegram!');
-        return false;
-    }
-    if (typeof tg.sendData !== 'function') {
-        dbg('❌ sendData не функция');
-        alert('sendData недоступен');
-        return false;
-    }
-    try {
-        var json = JSON.stringify(data);
-        dbg('→ JSON: ' + json);
-        tg.sendData(json);
-        dbg('✅ sendData OK');
-        return true;
-    } catch (e) {
-        dbg('❌ Ошибка: ' + e.message);
-        alert('Ошибка: ' + e.message);
-        return false;
     }
 }
 
 function buy(payload) {
-    dbg('→ buy: ' + payload);
     if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-    if (sendToBot({ action: 'buy', payload: payload })) {
-        dbg('→ tg.close()');
-        setTimeout(function() { tg.close(); }, 300);
-    }
+    var notif = document.createElement('div');
+    notif.className = 'notif';
+    notif.innerHTML = '✅ Заказ оформлен!<span>Открываю бота...</span>';
+    document.body.appendChild(notif);
+    setTimeout(function () {
+        window.location.href = 'https://t.me/XMPrivateBot?start=buy_' + payload;
+    }, 800);
 }
 
 function activateKey() {
     var k = document.getElementById('keyInput').value.trim().toUpperCase();
     if (!k) { alert('Введи ключ!'); return; }
-    if (sendToBot({ action: 'activate', code: k })) setTimeout(function() { tg.close(); }, 300);
+    window.location.href = 'https://t.me/XMPrivateBot?start=key_' + k;
 }
 
 function sendSupport() {
     var t = document.getElementById('supportInput').value.trim();
     if (!t) { alert('Напиши вопрос!'); return; }
-    if (sendToBot({ action: 'support', text: t })) setTimeout(function() { tg.close(); }, 300);
+    window.location.href = 'https://t.me/XMPrivateBot?start=support_' + encodeURIComponent(t);
 }
 
 function shareRef() {
@@ -245,12 +203,12 @@ function shareRef() {
 }
 
 function sendAction(a) {
-    if (sendToBot({ action: a })) setTimeout(function() { tg.close(); }, 300);
+    window.location.href = 'https://t.me/XMPrivateBot?start=action_' + a;
 }
 
 function adminAction(type) {
     if (!IS_ADMIN) { alert('Нет доступа'); return; }
-    if (sendToBot({ action: 'admin', type: type })) setTimeout(function() { tg.close(); }, 300);
+    window.location.href = 'https://t.me/XMPrivateBot?start=admin_' + type;
 }
 
 var FAQ_DATA = [
@@ -305,8 +263,6 @@ function showPage(id) {
 if (IS_ADMIN) {
     document.getElementById('adminBtn').style.display = 'flex';
 }
-
-dbg('6. Готов');
 </script>
 </body>
 </html>

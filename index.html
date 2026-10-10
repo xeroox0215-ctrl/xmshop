@@ -17,49 +17,49 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;backgrou
 .logo p{color:#555;font-size:11px;letter-spacing:5px;margin-top:4px}
 @keyframes sh{to{background-position:200% center}}
 .screen{display:none}
-.screen.active{display:block;animation:fi .2s}
-@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.screen.active{display:block}
 .sec{font-size:12px;color:#666;letter-spacing:3px;margin:24px 0 12px 4px;font-weight:700;text-transform:uppercase}
-.btn{display:flex;align-items:center;width:100%;padding:16px 18px;margin-bottom:10px;background:linear-gradient(135deg,rgba(20,20,20,.9),rgba(30,30,30,.9));border:1px solid rgba(255,255,255,.08);border-radius:16px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;text-align:left}
-.btn:active{transform:scale(.97);background:rgba(0,224,255,.12);border-color:rgba(0,224,255,.4)}
+.btn{display:flex;align-items:center;width:100%;padding:16px 18px;margin-bottom:10px;background:#141414;border:1px solid rgba(255,255,255,.08);border-radius:16px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;text-align:left}
+.btn:active{transform:scale(.97);background:rgba(0,224,255,.12)}
 .btn .ic{font-size:24px;margin-right:14px;width:32px;text-align:center;flex-shrink:0}
 .btn .tx{flex:1;min-width:0}
-.btn .nm{font-weight:700;font-size:15px;color:#fff;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.btn .sb{font-size:12px;color:#777;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.btn .pr{font-size:14px;color:#00e0ff;font-weight:900;margin-left:10px;white-space:nowrap;flex-shrink:0}
+.btn .nm{font-weight:700;font-size:15px;color:#fff;margin-bottom:3px}
+.btn .sb{font-size:12px;color:#777}
+.btn .pr{font-size:14px;color:#00e0ff;font-weight:900;margin-left:10px;flex-shrink:0}
 .btn .ar{color:#555;font-size:20px;margin-left:8px;flex-shrink:0}
-.bk{display:inline-flex;align-items:center;padding:10px 16px;margin-bottom:18px;background:linear-gradient(135deg,rgba(30,30,30,.9),rgba(40,40,40,.9));border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#00e0ff;font-size:14px;cursor:pointer;font-weight:700}
-.bk:active{transform:scale(.95);background:rgba(0,224,255,.15)}
+.bk{display:inline-flex;align-items:center;padding:10px 16px;margin-bottom:18px;background:#1a1a1a;border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#00e0ff;font-size:14px;cursor:pointer;font-weight:700}
+.bk:active{transform:scale(.95)}
 .bk .ar{margin-right:8px;font-size:16px}
 .pt{font-size:24px;font-weight:900;margin-bottom:8px;color:#fff}
 .pp{font-size:32px;font-weight:900;color:#00e0ff;margin-bottom:20px}
-.db{background:linear-gradient(135deg,rgba(20,20,20,.9),rgba(30,30,30,.9));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;margin-bottom:16px}
+.db{background:#141414;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;margin-bottom:16px}
 .db h3{font-size:13px;color:#00e0ff;letter-spacing:2px;margin-bottom:12px;font-weight:700}
 .db ul{list-style:none}
 .db li{font-size:14px;color:#ccc;padding:8px 0 8px 26px;position:relative;line-height:1.5;border-bottom:1px solid rgba(255,255,255,.04)}
 .db li:last-child{border-bottom:none}
 .db li:before{content:"*";position:absolute;left:4px;color:#00e0ff;font-weight:900;top:8px}
-.buy{display:block;width:100%;padding:20px;margin-top:20px;background:linear-gradient(135deg,#00e0ff,#0099cc);border:none;border-radius:16px;color:#000;font-size:17px;font-weight:900;letter-spacing:1px;cursor:pointer;text-transform:uppercase}
+.buy{display:block;width:100%;padding:20px;margin-top:20px;background:linear-gradient(135deg,#00e0ff,#0099cc);border:none;border-radius:16px;color:#000;font-size:17px;font-weight:900;cursor:pointer;text-transform:uppercase}
 .buy:active{transform:scale(.97);opacity:.9}
-.about-box{background:linear-gradient(135deg,rgba(0,224,255,.08),rgba(20,20,20,.9));border:1px solid rgba(0,224,255,.2);border-radius:16px;padding:20px;margin-bottom:16px}
+.about-box{background:#141414;border:1px solid rgba(0,224,255,.2);border-radius:16px;padding:20px;margin-bottom:16px}
 .about-box h2{font-size:20px;color:#00e0ff;margin-bottom:12px;font-weight:900}
 .about-box p{font-size:14px;color:#ccc;line-height:1.7;margin-bottom:10px}
 .about-box .hl{color:#00e0ff;font-weight:700}
+.about-box ul{list-style:none;margin-top:12px}
+.about-box li{font-size:14px;color:#ccc;padding:6px 0 6px 24px;position:relative}
+.about-box li:before{content:"+";position:absolute;left:4px;color:#00e0ff;font-weight:900;top:5px}
 </style>
 </head>
 <body>
 <div id="stars"></div>
 <div class="app">
-<div class="logo"><h1>XMPRIVAT</h1><p>SHOP</p></div>
-
-<div id="main" class="screen active">
+<div class="logo"><h1>XMPRIVAT</h1><p>SHOP</p></div><div id="main" class="screen active">
 <div class="sec">Приватка</div>
 <button class="btn" onclick="s('p1')"><span class="ic">👑</span><span class="tx"><div class="nm">Приватка на неделю</div><div class="sb">7 дней доступа</div></span><span class="pr">80 ⭐</span></button>
 <button class="btn" onclick="s('p2')"><span class="ic">👑</span><span class="tx"><div class="nm">Приватка на месяц</div><div class="sb">30 дней доступа</div></span><span class="pr">130 ⭐</span></button>
 <button class="btn" onclick="s('p3')"><span class="ic">👑</span><span class="tx"><div class="nm">Приватка навсегда</div><div class="sb">бессрочно</div></span><span class="pr">200 ⭐</span></button>
 
 <div class="sec">Конфиги</div>
-<button class="btn" onclick="s('c1')"><span class="ic">📄</span><span class="tx"><div class="nm">Конфиг</div><div class="sb">файл .pcfg + инструкция</div></span><span class="pr">100 ⭐</span></button>
+<button class="btn" onclick="s('c1')"><span class="ic">📄</span><span class="tx"><div class="nm">Конфиг</div><div class="sb">файл + инструкция</div></span><span class="pr">100 ⭐</span></button>
 <button class="btn" onclick="s('c2')"><span class="ic">📄</span><span class="tx"><div class="nm">Конфиг + приватка</div><div class="sb">конфиг и доступ навсегда</div></span><span class="pr">175 ⭐</span></button>
 
 <div class="sec">Сеты</div>
@@ -67,25 +67,24 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;backgrou
 <button class="btn" onclick="s('st2')"><span class="ic">⚔️</span><span class="tx"><div class="nm">Сет нерка + пб</div><div class="sb">кастом под тебя</div></span><span class="pr">200 ⭐</span></button>
 
 <div class="sec">Скрипты</div>
-<button class="btn" onclick="s('sc1')"><span class="ic">🛡️</span><span class="tx"><div class="nm">Авто тотем</div><div class="sb">авто-поднятие при низком HP</div></span><span class="pr">25 ⭐</span></button>
-<button class="btn" onclick="s('sc2')"><span class="ic">🧱</span><span class="tx"><div class="nm">Застрой</div><div class="sb">авто-застройка стен</div></span><span class="pr">25 ⭐</span></button>
+<button class="btn" onclick="s('sc1')"><span class="ic">🛡️</span><span class="tx"><div class="nm">Авто тотем</div><div class="sb">при низком HP</div></span><span class="pr">25 ⭐</span></button>
+<button class="btn" onclick="s('sc2')"><span class="ic">🧱</span><span class="tx"><div class="nm">Застрой</div><div class="sb">авто-застройка</div></span><span class="pr">25 ⭐</span></button>
 <button class="btn" onclick="s('sc3')"><span class="ic">🥶</span><span class="tx"><div class="nm">Завис</div><div class="sb">фриз противника</div></span><span class="pr">25 ⭐</span></button>
-<button class="btn" onclick="s('sc4')"><span class="ic">🚀</span><span class="tx"><div class="nm">Оптимизации</div><div class="sb">FPS boost + снижение пинга</div></span><span class="pr">25 ⭐</span></button>
+<button class="btn" onclick="s('sc4')"><span class="ic">🚀</span><span class="tx"><div class="nm">Оптимизации</div><div class="sb">FPS и пинг</div></span><span class="pr">25 ⭐</span></button>
 
 <div class="sec">Реклама</div>
-<button class="btn" onclick="s('a1')"><span class="ic">📢</span><span class="tx"><div class="nm">Реклама 1 день</div><div class="sb">24 часа рассылки</div></span><span class="pr">65 ⭐</span></button>
-<button class="btn" onclick="s('a2')"><span class="ic">📢</span><span class="tx"><div class="nm">Реклама 2 дня</div><div class="sb">48 часов рассылки</div></span><span class="pr">80 ⭐</span></button>
-<button class="btn" onclick="s('a3')"><span class="ic">📢</span><span class="tx"><div class="nm">Реклама 3 дня</div><div class="sb">72 часа рассылки</div></span><span class="pr">100 ⭐</span></button>
-<button class="btn" onclick="s('a4')"><span class="ic">📢</span><span class="tx"><div class="nm">Реклама неделя</div><div class="sb">7 дней рассылки</div></span><span class="pr">150 ⭐</span></button>
+<button class="btn" onclick="s('a1')"><span class="ic">📢</span><span class="tx"><div class="nm">Реклама 1 день</div><div class="sb">24 часа</div></span><span class="pr">65 ⭐</span></button>
+<button class="btn" onclick="s('a2')"><span class="ic">📢</span><span class="tx"><div class="nm">Реклама 2 дня</div><div class="sb">48 часов</div></span><span class="pr">80 ⭐</span></button>
+<button class="btn" onclick="s('a3')"><span class="ic">📢</span><span class="tx"><div class="nm">Реклама 3 дня</div><div class="sb">72 часа</div></span><span class="pr">100 ⭐</span></button>
+<button class="btn" onclick="s('a4')"><span class="ic">📢</span><span class="tx"><div class="nm">Реклама неделя</div><div class="sb">7 дней</div></span><span class="pr">150 ⭐</span></button>
 
 <div class="sec">Сервис</div>
-<button class="btn" onclick="g('profile')"><span class="ic">👤</span><span class="tx"><div class="nm">Мой профиль</div><div class="sb">подписка, баллы, реклама</div></span><span class="ar">></span></button>
+<button class="btn" onclick="g('profile')"><span class="ic">👤</span><span class="tx"><div class="nm">Мой профиль</div><div class="sb">подписка, баллы</div></span><span class="ar">></span></button>
 <button class="btn" onclick="g('promos')"><span class="ic">🎫</span><span class="tx"><div class="nm">Промокоды</div><div class="sb">скидки за баллы</div></span><span class="ar">></span></button>
 <button class="btn" onclick="g('activate')"><span class="ic">🎁</span><span class="tx"><div class="nm">Активировать код</div><div class="sb">введи ключ</div></span><span class="ar">></span></button>
-<button class="btn" onclick="g('support')"><span class="ic">🛠️</span><span class="tx"><div class="nm">Поддержка</div><div class="sb">напиши вопрос админу</div></span><span class="ar">></span></button>
+<button class="btn" onclick="g('support')"><span class="ic">🛠️</span><span class="tx"><div class="nm">Поддержка</div><div class="sb">напиши админу</div></span><span class="ar">></span></button>
 <button class="btn" onclick="s('about')"><span class="ic">ℹ️</span><span class="tx"><div class="nm">О проекте</div><div class="sb">всё о магазине</div></span><span class="ar">></span></button>
-</div>
-<div id="p1" class="screen">
+</div><div id="p1" class="screen">
 <div class="bk" onclick="s('main')"><span class="ar">&lt;</span>Назад в магазин</div>
 <div class="pt">👑 Приватка на неделю</div>
 <div class="pp">80 ⭐</div>
@@ -129,8 +128,8 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;backgrou
 <div class="pt">📄 Конфиг</div>
 <div class="pp">100 ⭐</div>
 <div class="db"><h3>Что входит</h3><ul>
-<li>Файл конфига .pcfg</li>
-<li>Настройки с биндами</li>
+<li>Файл конфига с биндами</li>
+<li>Настройки под мобильные</li>
 <li>Инструкция по установке</li>
 <li>Поддержка при проблемах</li>
 </ul></div>
@@ -142,15 +141,13 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;backgrou
 <div class="pt">📄 Конфиг + приватка</div>
 <div class="pp">175 ⭐</div>
 <div class="db"><h3>Что входит</h3><ul>
-<li>Файл конфига .pcfg</li>
+<li>Файл конфига с биндами</li>
 <li>Приватка навсегда</li>
 <li>Инструкция по установке</li>
 <li>Поддержка 24/7</li>
 </ul></div>
 <button class="buy" onclick="g('conf_priv_175')">Купить за 175 ⭐</button>
-</div>
-
-<div id="st1" class="screen">
+</div><div id="st1" class="screen">
 <div class="bk" onclick="s('main')"><span class="ar">&lt;</span>Назад в магазин</div>
 <div class="pt">⚔️ Сет z5 + вива</div>
 <div class="pp">85 ⭐</div>
@@ -170,7 +167,7 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;backgrou
 <div class="pp">200 ⭐</div>
 <div class="db"><h3>Что входит</h3><ul>
 <li>База нерка + пб-кастом</li>
-<li>Расширенные бинды и авто-функции</li>
+<li>Расширенные бинды</li>
 <li>Оптимизация FPS и пинга</li>
 <li>Расходники включены</li>
 </ul></div>
@@ -223,9 +220,7 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;backgrou
 <li>Чистка памяти устройства</li>
 </ul></div>
 <button class="buy" onclick="g('sc_opt')">Купить за 25 ⭐</button>
-</div>
-
-<div id="a1" class="screen">
+</div><div id="a1" class="screen">
 <div class="bk" onclick="s('main')"><span class="ar">&lt;</span>Назад в магазин</div>
 <div class="pt">📢 Реклама 1 день</div>
 <div class="pp">65 ⭐</div>
@@ -290,8 +285,7 @@ html,body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;backgrou
 <p style="margin-top:14px">По всем вопросам — раздел <span class="hl">Поддержка</span> или напиши админу напрямую.</p>
 </div>
 <button class="buy" onclick="g('support')">🛠️ Написать в поддержку</button>
-</div>
-</div>
+</div></div>
 <script>
 var tg = window.Telegram ? window.Telegram.WebApp : null;
 if (tg) { tg.ready(); tg.expand(); }

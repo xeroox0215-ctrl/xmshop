@@ -180,6 +180,7 @@ function buy(payload) {
     notif.innerHTML = '✅ Заказ оформлен!<span>Открываю бота...</span>';
     document.body.appendChild(notif);
     setTimeout(function () {
+        if (tg) tg.close();
         window.location.href = 'https://t.me/XMPrivateBot?start=buy_' + payload;
     }, 800);
 }

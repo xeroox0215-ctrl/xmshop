@@ -32,15 +32,9 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
 .card-price { font-size: 20px; font-weight: 800; color: #00e0ff; margin-bottom: 12px; }
 .buy-btn { width: 100%; padding: 14px; background: linear-gradient(90deg, #00e0ff, #0099ff); border: none; border-radius: 10px; color: #000; font-size: 15px; font-weight: 700; cursor: pointer; }
 .buy-btn:active { transform: scale(0.97); }
-.profile-card { padding: 24px; background: linear-gradient(135deg, rgba(0, 224, 255, 0.1), rgba(0, 80, 200, 0.05)); border: 1px solid rgba(0, 224, 255, 0.3); border-radius: 16px; margin-bottom: 20px; text-align: center; }
-.profile-name { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
-.profile-id { font-size: 12px; color: #666; margin-bottom: 16px; }
 .loader { text-align: center; padding: 40px; color: #555; }
-input, textarea { width: 100%; padding: 14px; background: #111; border: 1px solid #333; border-radius: 10px; color: #fff; font-size: 16px; margin-bottom: 12px; outline: none; font-family: inherit; }
-textarea { min-height: 120px; }
-.notif { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #00e0ff, #0099ff); color: #000; padding: 20px; text-align: center; font-weight: 800; font-size: 16px; z-index: 99999; animation: slideDown 0.3s ease-out; }
+.notif { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #00e0ff, #0099ff); color: #000; padding: 20px; text-align: center; font-weight: 800; font-size: 16px; z-index: 99999; }
 .notif span { display: block; font-size: 13px; font-weight: 600; opacity: 0.8; margin-top: 4px; }
-@keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 </style>
 </head>
 <body>
@@ -56,12 +50,12 @@ textarea { min-height: 120px; }
         <button class="menu-btn" onclick="showPage('conf')"><span class="icon">📄</span> Конфиг <span class="arrow">›</span></button>
         <button class="menu-btn" onclick="showPage('sets')"><span class="icon">⚔️</span> Сеты <span class="arrow">›</span></button>
         <button class="menu-btn" onclick="showPage('scripts')"><span class="icon">📜</span> Скрипты <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="showPage('profile')"><span class="icon">👤</span> Мой профиль <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="showPage('key')"><span class="icon">🎁</span> Активировать код <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="goBot('profile')"><span class="icon">👤</span> Мой профиль <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="goBot('activate')"><span class="icon">🎁</span> Активировать код <span class="arrow">›</span></button>
         <button class="menu-btn" onclick="showPage('faq')"><span class="icon">❓</span> FAQ <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="showPage('support')"><span class="icon">🛠️</span> Поддержка <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="showPage('reviews')"><span class="icon">⭐</span> Отзывы <span class="arrow">›</span></button>
-        <button class="menu-btn admin" id="adminBtn" onclick="showPage('admin')" style="display:none"><span class="icon">👑</span> АДМИН-ПАНЕЛЬ <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="goBot('support')"><span class="icon">🛠️</span> Поддержка <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="goBot('reviews')"><span class="icon">⭐</span> Отзывы <span class="arrow">›</span></button>
+        <button class="menu-btn admin" id="adminBtn" onclick="goBot('admin')" style="display:none"><span class="icon">👑</span> АДМИН-ПАНЕЛЬ <span class="arrow">›</span></button>
     </div>
 
     <div id="priv" class="page">
@@ -96,50 +90,10 @@ textarea { min-height: 120px; }
         <div class="card"><div class="card-title">🚀 Оптимизации</div><div class="card-price">⭐ 25</div><button class="buy-btn" onclick="buy('pay_s_sc_opt_25')">Купить</button></div>
     </div>
 
-    <div id="profile" class="page">
-        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
-        <div class="page-title">👤 Мой профиль</div>
-        <div id="profileContent" class="loader">Загрузка</div>
-    </div>
-
-    <div id="key" class="page">
-        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
-        <div class="page-title">🎁 Активировать код</div>
-        <div class="card">
-            <input id="keyInput" type="text" placeholder="XM-1-XXXXXX">
-            <button class="buy-btn" onclick="activateKey()">Активировать</button>
-        </div>
-    </div>
-
     <div id="faq" class="page">
         <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
         <div class="page-title">❓ FAQ</div>
         <div id="faqContent" class="loader">Загрузка</div>
-    </div>
-
-    <div id="support" class="page">
-        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
-        <div class="page-title">🛠️ Поддержка</div>
-        <div class="card">
-            <textarea id="supportInput" placeholder="Опиши проблему..."></textarea>
-            <button class="buy-btn" onclick="sendSupport()">Отправить</button>
-        </div>
-    </div>
-
-    <div id="reviews" class="page">
-        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
-        <div class="page-title">⭐ Отзывы</div>
-        <div id="reviewsContent" class="loader">Загрузка</div>
-    </div>
-
-    <div id="admin" class="page">
-        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
-        <div class="page-title">👑 Админ-панель</div>
-        <button class="menu-btn" onclick="adminAction('stats')"><span class="icon">📊</span> Статистика</button>
-        <button class="menu-btn" onclick="adminAction('orders')"><span class="icon">📋</span> Заказы</button>
-        <button class="menu-btn" onclick="adminAction('keys')"><span class="icon">🎉</span> Ключи</button>
-        <button class="menu-btn" onclick="adminAction('bans')"><span class="icon">🚫</span> Баны</button>
-        <button class="menu-btn" onclick="adminAction('broadcast')"><span class="icon">📢</span> Рассылка</button>
     </div>
 </div>
 
@@ -185,31 +139,12 @@ function buy(payload) {
     }, 800);
 }
 
-function activateKey() {
-    var k = document.getElementById('keyInput').value.trim().toUpperCase();
-    if (!k) { alert('Введи ключ!'); return; }
-    window.location.href = 'https://t.me/XMPrivateBot?start=key_' + k;
-}
-
-function sendSupport() {
-    var t = document.getElementById('supportInput').value.trim();
-    if (!t) { alert('Напиши вопрос!'); return; }
-    window.location.href = 'https://t.me/XMPrivateBot?start=support_' + encodeURIComponent(t);
-}
-
-function shareRef() {
-    if (!USER_ID) return;
-    var refUrl = 'https://t.me/XMPrivateBot?start=ref_' + USER_ID;
-    if (tg) tg.openTelegramLink('https://t.me/share/url?url=' + encodeURIComponent(refUrl));
-}
-
-function sendAction(a) {
-    window.location.href = 'https://t.me/XMPrivateBot?start=action_' + a;
-}
-
-function adminAction(type) {
-    if (!IS_ADMIN) { alert('Нет доступа'); return; }
-    window.location.href = 'https://t.me/XMPrivateBot?start=admin_' + type;
+function goBot(arg) {
+    if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+    if (tg) tg.close();
+    setTimeout(function () {
+        window.location.href = 'https://t.me/XMPrivateBot?start=' + arg;
+    }, 300);
 }
 
 var FAQ_DATA = [
@@ -223,17 +158,6 @@ var FAQ_DATA = [
     ['Как пригласить друга?', 'В профиле — кнопка.']
 ];
 
-function loadProfile() {
-    if (!USER_ID) {
-        document.getElementById('profileContent').innerHTML = '<div class="page-desc">Открой через Telegram</div>';
-        return;
-    }
-    var html = '<div class="profile-card"><div class="profile-name">ID: ' + USER_ID + '</div><div class="profile-id">' + (IS_ADMIN ? '👑 Админ' : '👤 Юзер') + '</div></div>';
-    html += '<div class="card"><div class="card-title">👥 Пригласить друга</div><div class="card-desc">+5 баллов за друга</div><button class="buy-btn" onclick="shareRef()">Поделиться</button></div>';
-    html += '<div class="card"><div class="card-title">🎁 Магазин промокодов</div><button class="buy-btn" onclick="sendAction(\'promo_shop\')">Открыть</button></div>';
-    document.getElementById('profileContent').innerHTML = html;
-}
-
 function loadFaq() {
     var c = document.getElementById('faqContent');
     c.className = '';
@@ -244,21 +168,13 @@ function loadFaq() {
     c.innerHTML = html;
 }
 
-function loadReviews() {
-    var c = document.getElementById('reviewsContent');
-    c.className = '';
-    c.innerHTML = '<div class="card"><div class="card-title">⭐ Отзывы</div><div class="card-desc">Пока пусто.</div></div>';
-}
-
 function showPage(id) {
     var pages = document.querySelectorAll('.page');
     for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
     document.getElementById(id).classList.add('active');
     if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (id === 'profile') loadProfile();
     if (id === 'faq') loadFaq();
-    if (id === 'reviews') loadReviews();
 }
 
 if (IS_ADMIN) {

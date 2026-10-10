@@ -20,7 +20,6 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
 .menu-btn:active { transform: scale(0.97); background: rgba(0, 224, 255, 0.1); }
 .menu-btn .icon { font-size: 24px; margin-right: 16px; width: 30px; text-align: center; }
 .menu-btn .arrow { margin-left: auto; color: #555; font-size: 18px; }
-.loader { text-align: center; padding: 40px; color: #555; }
 </style>
 </head>
 <body>
@@ -30,12 +29,18 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
         <h1>XMPRIVAT</h1>
         <p>SHOP</p>
     </div>
-
     <div id="main">
-        <button class="menu-btn" onclick="go('catalog')"><span class="icon">👑</span> Приватка <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="go('catalog')"><span class="icon">📄</span> Конфиг <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="go('catalog')"><span class="icon">⚔️</span> Сеты <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="go('catalog')"><span class="icon">📜</span> Скрипты <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('priv_week')"><span class="icon">👑</span> Приватка на неделю <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('priv_month')"><span class="icon">👑</span> Приватка на месяц <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('priv_forever')"><span class="icon">👑</span> Приватка навсегда <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('conf_100')"><span class="icon">📄</span> Конфиг <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('conf_priv_175')"><span class="icon">📄</span> Конфиг + приватка <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('set_z5viva')"><span class="icon">⚔️</span> Сет z5 + вива <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('set_nerkapb')"><span class="icon">⚔️</span> Сет нерка + пб <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('sc_totem')"><span class="icon">🛡️</span> Авто тотем <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('sc_build')"><span class="icon">🧱</span> Застрой <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('sc_freeze')"><span class="icon">🥶</span> Завис <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('sc_opt')"><span class="icon">🚀</span> Оптимизации <span class="arrow">›</span></button>
         <button class="menu-btn" onclick="go('profile')"><span class="icon">👤</span> Мой профиль <span class="arrow">›</span></button>
         <button class="menu-btn" onclick="go('promos')"><span class="icon">🎫</span> Промокоды <span class="arrow">›</span></button>
         <button class="menu-btn" onclick="go('activate')"><span class="icon">🎁</span> Активировать код <span class="arrow">›</span></button>
@@ -43,7 +48,7 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
         <button class="menu-btn" onclick="go('reviews')"><span class="icon">⭐</span> Отзывы <span class="arrow">›</span></button>
     </div>
 </div>
-
+    
 <script>
 var tg = window.Telegram ? window.Telegram.WebApp : null;
 
@@ -75,7 +80,7 @@ function go(target) {
     }
     try {
         tg.sendData(JSON.stringify({ action: 'go', target: target }));
-        tg.close();
+        setTimeout(function(){ tg.close(); }, 300);
     } catch(e) {
         window.location.href = 'https://t.me/XMPrivateBot';
     }

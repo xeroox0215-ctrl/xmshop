@@ -20,17 +20,6 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
 .menu-btn:active { transform: scale(0.97); background: rgba(0, 224, 255, 0.1); }
 .menu-btn .icon { font-size: 24px; margin-right: 16px; width: 30px; text-align: center; }
 .menu-btn .arrow { margin-left: auto; color: #555; font-size: 18px; }
-.page { display: none; }
-.page.active { display: block; }
-.back-btn { display: inline-flex; align-items: center; padding: 8px 16px; margin-bottom: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #fff; font-size: 14px; cursor: pointer; }
-.page-title { font-size: 26px; font-weight: 800; margin-bottom: 8px; background: linear-gradient(90deg, #fff, #00e0ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.page-desc { color: #666; font-size: 13px; margin-bottom: 24px; line-height: 1.5; }
-.card { padding: 18px; margin-bottom: 12px; background: rgba(20, 20, 20, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; }
-.card-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-.card-desc { font-size: 13px; color: #777; margin-bottom: 14px; line-height: 1.5; }
-.card-price { font-size: 20px; font-weight: 800; color: #00e0ff; margin-bottom: 12px; }
-.buy-btn { width: 100%; padding: 16px; background: linear-gradient(90deg, #00e0ff, #0099ff); border: none; border-radius: 12px; color: #000; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 8px; }
-.buy-btn:active { transform: scale(0.97); }
 .loader { text-align: center; padding: 40px; color: #555; }
 </style>
 </head>
@@ -42,23 +31,16 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
         <p>SHOP</p>
     </div>
 
-    <div id="main" class="page active">
-        <button class="menu-btn" onclick="openBot('catalog')"><span class="icon">👑</span> Приватка <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="openBot('catalog')"><span class="icon">📄</span> Конфиг <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="openBot('catalog')"><span class="icon">⚔️</span> Сеты <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="openBot('catalog')"><span class="icon">📜</span> Скрипты <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="openBot('profile')"><span class="icon">👤</span> Мой профиль <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="openBot('promos')"><span class="icon">🎫</span> Промокоды <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="openBot('activate')"><span class="icon">🎁</span> Активировать код <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="openBot('support')"><span class="icon">🛠️</span> Поддержка <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="openBot('reviews')"><span class="icon">⭐</span> Отзывы <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="showPage('faq')"><span class="icon">❓</span> FAQ <span class="arrow">›</span></button>
-    </div>
-
-    <div id="faq" class="page">
-        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
-        <div class="page-title">❓ FAQ</div>
-        <div id="faqContent" class="loader">Загрузка</div>
+    <div id="main">
+        <button class="menu-btn" onclick="go('catalog')"><span class="icon">👑</span> Приватка <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('catalog')"><span class="icon">📄</span> Конфиг <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('catalog')"><span class="icon">⚔️</span> Сеты <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('catalog')"><span class="icon">📜</span> Скрипты <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('profile')"><span class="icon">👤</span> Мой профиль <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('promos')"><span class="icon">🎫</span> Промокоды <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('activate')"><span class="icon">🎁</span> Активировать код <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('support')"><span class="icon">🛠️</span> Поддержка <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="go('reviews')"><span class="icon">⭐</span> Отзывы <span class="arrow">›</span></button>
     </div>
 </div>
 
@@ -85,46 +67,18 @@ if (tg) {
     tg.expand();
 }
 
-function openBot(arg) {
+function go(target) {
     if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-    if (tg) {
+    if (!tg) {
+        window.location.href = 'https://t.me/XMPrivateBot';
+        return;
+    }
+    try {
+        tg.sendData(JSON.stringify({ action: 'go', target: target }));
         tg.close();
-        setTimeout(function () {
-            tg.openTelegramLink('https://t.me/XMPrivateBot');
-        }, 300);
-    } else {
+    } catch(e) {
         window.location.href = 'https://t.me/XMPrivateBot';
     }
-}
-
-var FAQ_DATA = [
-    ['Что такое приватка?', 'Общение с владельцами, помощь, ролики, конкурсы.'],
-    ['Как оплатить?', 'Через Telegram Stars в боте.'],
-    ['Как долго ждать?', 'Приватка и конфиг — мгновенно.'],
-    ['Что после оплаты?', 'Получишь ключ в чат.'],
-    ['Что за конфиг?', 'Настройки с биндами.'],
-    ['Не пришёл товар?', 'Напиши в поддержку в боте.'],
-    ['Что за баллы?', '5 баллов за друга.'],
-    ['Как пригласить друга?', 'В профиле в боте — кнопка.']
-];
-
-function loadFaq() {
-    var c = document.getElementById('faqContent');
-    c.className = '';
-    var html = '';
-    for (var i = 0; i < FAQ_DATA.length; i++) {
-        html += '<div class="card"><div class="card-title">❓ ' + FAQ_DATA[i][0] + '</div><div class="card-desc">' + FAQ_DATA[i][1] + '</div></div>';
-    }
-    c.innerHTML = html;
-}
-
-function showPage(id) {
-    var pages = document.querySelectorAll('.page');
-    for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
-    document.getElementById(id).classList.add('active');
-    if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (id === 'faq') loadFaq();
 }
 </script>
 </body>

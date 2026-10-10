@@ -32,8 +32,6 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
 .buy-btn { width: 100%; padding: 16px; background: linear-gradient(90deg, #00e0ff, #0099ff); border: none; border-radius: 12px; color: #000; font-size: 16px; font-weight: 800; cursor: pointer; margin-top: 8px; }
 .buy-btn:active { transform: scale(0.97); }
 .loader { text-align: center; padding: 40px; color: #555; }
-.notif { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #00e0ff, #0099ff); color: #000; padding: 20px; text-align: center; font-weight: 800; font-size: 16px; z-index: 99999; }
-.notif span { display: block; font-size: 13px; font-weight: 600; opacity: 0.8; margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -49,11 +47,11 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
         <button class="menu-btn" onclick="openBot('catalog')"><span class="icon">📄</span> Конфиг <span class="arrow">›</span></button>
         <button class="menu-btn" onclick="openBot('catalog')"><span class="icon">⚔️</span> Сеты <span class="arrow">›</span></button>
         <button class="menu-btn" onclick="openBot('catalog')"><span class="icon">📜</span> Скрипты <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="goBot('profile')"><span class="icon">👤</span> Мой профиль <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="goBot('promos')"><span class="icon">🎫</span> Промокоды <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="goBot('activate')"><span class="icon">🎁</span> Активировать код <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="goBot('support')"><span class="icon">🛠️</span> Поддержка <span class="arrow">›</span></button>
-        <button class="menu-btn" onclick="goBot('reviews')"><span class="icon">⭐</span> Отзывы <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="openBot('profile')"><span class="icon">👤</span> Мой профиль <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="openBot('promos')"><span class="icon">🎫</span> Промокоды <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="openBot('activate')"><span class="icon">🎁</span> Активировать код <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="openBot('support')"><span class="icon">🛠️</span> Поддержка <span class="arrow">›</span></button>
+        <button class="menu-btn" onclick="openBot('reviews')"><span class="icon">⭐</span> Отзывы <span class="arrow">›</span></button>
         <button class="menu-btn" onclick="showPage('faq')"><span class="icon">❓</span> FAQ <span class="arrow">›</span></button>
     </div>
 
@@ -66,9 +64,6 @@ html, body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', '
 
 <script>
 var tg = window.Telegram ? window.Telegram.WebApp : null;
-var USER_ID = 0;
-var WORKER_URL = "https://black-queen-cc63.xeroox0215.workers.dev";
-var HELPER_TOKEN = "8813740088:AAHw_BYedDLxPsHED5AIQQK4FjWg8y_JyRM";
 
 (function () {
     var c = document.getElementById('stars');
@@ -88,41 +83,18 @@ var HELPER_TOKEN = "8813740088:AAHw_BYedDLxPsHED5AIQQK4FjWg8y_JyRM";
 if (tg) {
     tg.ready();
     tg.expand();
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        USER_ID = tg.initDataUnsafe.user.id;
+}
+
+function openBot(arg) {
+    if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+    if (tg) {
+        tg.close();
+        setTimeout(function () {
+            tg.openTelegramLink('https://t.me/XMPrivateBot');
+        }, 300);
+    } else {
+        window.location.href = 'https://t.me/XMPrivateBot';
     }
-}
-
-function notif(text) {
-    var n = document.createElement('div');
-    n.className = 'notif';
-    n.innerHTML = text;
-    document.body.appendChild(n);
-    setTimeout(function () { n.remove(); }, 2000);
-}
-
-function goBot(action) {
-    if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-    if (!USER_ID) { notif('Ошибка: нет ID'); return; }
-    notif('✅ Открываю...<span>Проверь чат с ботом</span>');
-    var url = WORKER_URL + '?token=' + HELPER_TOKEN + '&chat_id=' + USER_ID + '&action=' + encodeURIComponent(action);
-    fetch(url).then(function(r) { return r.json(); }).then(function(data) {
-        if (tg) tg.close();
-    }).catch(function(e) {
-        notif('❌ ' + e.message);
-    });
-}
-
-function openBot(action) {
-    if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-    if (!USER_ID) { notif('Ошибка: нет ID'); return; }
-    notif('✅ Открываю магазин...');
-    var url = WORKER_URL + '?token=' + HELPER_TOKEN + '&chat_id=' + USER_ID + '&action=' + encodeURIComponent('menu');
-    fetch(url).then(function(r) { return r.json(); }).then(function(data) {
-        if (tg) tg.close();
-    }).catch(function(e) {
-        notif('❌ ' + e.message);
-    });
 }
 
 var FAQ_DATA = [

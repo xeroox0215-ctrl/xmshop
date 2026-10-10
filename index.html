@@ -2,288 +2,69 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>XMprivat SHOP</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{font-family:Arial,Helvetica,sans-serif;background:#000;color:#fff;min-height:100vh;overflow-x:hidden;user-select:none}
-#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.star{position:absolute;background:#fff;border-radius:50%;opacity:.5;animation:twinkle 3s infinite ease-in-out}
-@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
-.app{position:relative;z-index:1;max-width:500px;margin:0 auto;padding:20px 16px 40px;min-height:100vh}
+body{font-family:Arial,sans-serif;background:#000;color:#fff;padding:20px 16px 40px;min-height:100vh}
+.app{max-width:500px;margin:0 auto}
 .logo{text-align:center;margin-bottom:24px}
-.logo h1{font-size:36px;font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,#fff 0%,#00e0ff 50%,#fff 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 3s linear infinite}
-.logo p{color:#555;font-size:11px;letter-spacing:4px;margin-top:4px}
-@keyframes shine{to{background-position:200% center}}
-.section-title{font-size:11px;color:#666;letter-spacing:3px;text-transform:uppercase;margin:22px 4px 10px;font-weight:700}
-.menu-btn{display:flex;align-items:center;width:100%;padding:16px 18px;margin-bottom:8px;background:rgba(20,20,20,.7);border:1px solid rgba(255,255,255,.08);border-radius:14px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;text-align:left}
-.menu-btn:active{transform:scale(.97);background:rgba(0,224,255,.1)}
-.menu-btn .icon{font-size:22px;margin-right:14px;width:28px;text-align:center;flex-shrink:0}
-.menu-btn .label{flex:1}
-.menu-btn .sub{font-size:12px;color:#777;font-weight:500;margin-top:2px;display:block}
-.menu-btn .arrow{margin-left:auto;color:#555;font-size:18px}
-.back-btn{display:inline-flex;align-items:center;padding:8px 14px;margin-bottom:16px;background:rgba(30,30,30,.8);border:1px solid rgba(255,255,255,.08);border-radius:10px;color:#aaa;font-size:14px;cursor:pointer;font-weight:600}
-.back-btn:active{transform:scale(.95)}
-.back-btn .arr{margin-right:6px;font-size:16px}
-.product-title{font-size:22px;font-weight:900;margin-bottom:8px;color:#00e0ff}
-.product-price{font-size:28px;font-weight:900;color:#00e0ff;margin-bottom:20px}
-.desc-box{background:rgba(20,20,20,.7);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;margin-bottom:16px}
-.desc-box h3{font-size:13px;color:#00e0ff;letter-spacing:2px;margin-bottom:12px;font-weight:700}
-.desc-box ul{list-style:none}
-.desc-box li{font-size:14px;color:#ccc;padding:6px 0;padding-left:22px;position:relative;line-height:1.4}
-.desc-box li:before{content:none;position:absolute;left:8px;color:#00e0ff;font-weight:900}
-.buy-btn{display:block;width:100%;padding:18px;margin-top:20px;background:linear-gradient(135deg,#00e0ff,#0099cc);border:none;border-radius:14px;color:#000;font-size:17px;font-weight:900;letter-spacing:1px;cursor:pointer;text-transform:uppercase}
-.buy-btn:active{transform:scale(.97);opacity:.9}
-.screen{display:none}
-.screen.active{display:block}
-.product-item{display:flex;align-items:center;width:100%;padding:14px 18px;margin-bottom:8px;background:rgba(20,20,20,.7);border:1px solid rgba(255,255,255,.08);border-radius:12px;color:#fff;font-size:15px;cursor:pointer;text-align:left}
-.product-item:active{transform:scale(.97);background:rgba(0,224,255,.1)}
-.product-item .icon{font-size:20px;margin-right:12px}
-.product-item .info{flex:1}
-.product-item .name{font-weight:700;font-size:15px;margin-bottom:2px}
-.product-item .price{font-size:13px;color:#00e0ff;font-weight:700}
-.product-item .arrow{color:#555;font-size:18px;margin-left:8px}
+.logo h1{font-size:36px;font-weight:900;color:#00e0ff;letter-spacing:3px}
+.logo p{color:#555;font-size:11px;letter-spacing:4px}
+.title{font-size:11px;color:#666;letter-spacing:3px;margin:22px 0 10px;font-weight:700}
+.btn{display:flex;align-items:center;width:100%;padding:16px 18px;margin-bottom:8px;background:#141414;border:1px solid #222;border-radius:14px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;text-align:left}
+.btn:active{background:#0a1f24}
+.btn .ic{font-size:22px;margin-right:14px;width:28px;text-align:center;flex-shrink:0}
+.btn .nm{flex:1}
+.btn .pr{font-size:14px;color:#00e0ff;font-weight:900;margin-left:10px}
 </style>
 </head>
 <body>
-<div id="stars"></div>
 <div class="app">
 <div class="logo"><h1>XMPRIVAT</h1><p>SHOP</p></div>
 
-<div id="screen-main" class="screen active">
-<div class="section-title">Категории</div>
-<button class="menu-btn" onclick="showScreen('cat-priv')"><span class="icon">👑</span><span class="label">Приватка<span class="sub">Доступ в приватный чат</span></span><span class="arrow">></span></button>
-<button class="menu-btn" onclick="showScreen('cat-conf')"><span class="icon">📄</span><span class="label">Конфиги<span class="sub">Настройки с биндами</span></span><span class="arrow">></span></button>
-<button class="menu-btn" onclick="showScreen('cat-sets')"><span class="icon">⚔️</span><span class="label">Сеты<span class="sub">Кастомные ПВП-сборки</span></span><span class="arrow">></span></button>
-<button class="menu-btn" onclick="showScreen('cat-scripts')"><span class="icon">📜</span><span class="label">Скрипты<span class="sub">LUA для ProtoHack</span></span><span class="arrow">></span></button>
-<button class="menu-btn" onclick="showScreen('cat-adv')"><span class="icon">📢</span><span class="label">Реклама<span class="sub">Рассылка по базе бота</span></span><span class="arrow">></span></button>
-<div class="section-title">Сервис</div>
-<button class="menu-btn" onclick="go('profile')"><span class="icon">👤</span><span class="label">Мой профиль</span><span class="arrow">></span></button>
-<button class="menu-btn" onclick="go('promos')"><span class="icon">🎫</span><span class="label">Промокоды</span><span class="arrow">></span></button>
-<button class="menu-btn" onclick="go('activate')"><span class="icon">🎁</span><span class="label">Активировать код</span><span class="arrow">></span></button>
-<button class="menu-btn" onclick="go('support')"><span class="icon">🛠️</span><span class="label">Поддержка</span><span class="arrow">></span></button>
-<button class="menu-btn" onclick="go('reviews')"><span class="icon">⭐</span><span class="label">Отзывы</span><span class="arrow">></span></button>
-</div>
+<div class="title">ПРИВАТКА</div>
+<button class="btn" onclick="g('priv_week')"><span class="ic">👑</span><span class="nm">Приватка на неделю</span><span class="pr">80 ⭐</span></button>
+<button class="btn" onclick="g('priv_month')"><span class="ic">👑</span><span class="nm">Приватка на месяц</span><span class="pr">130 ⭐</span></button>
+<button class="btn" onclick="g('priv_forever')"><span class="ic">👑</span><span class="nm">Приватка навсегда</span><span class="pr">200 ⭐</span></button>
 
-<div id="screen-cat-priv" class="screen">
-<div class="back-btn" onclick="showScreen('screen-main')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">ПРИВАТКА</div>
-<div class="desc-box"><h3>ЧТО ЭТО</h3><ul><li>Доступ в приватный чат владельцев</li><li>Общение без игнора, помощь по игре</li><li>Ролики, конкурсы, розыгрыши</li><li>Срок действия на выбор</li></ul></div>
-<div class="section-title">Выбери срок</div>
-<button class="product-item" onclick="showScreen('prod-priv_week')"><span class="icon">👑</span><span class="info"><div class="name">Приватка на неделю</div><div class="price">7 дней - 80 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-priv_month')"><span class="icon">👑</span><span class="info"><div class="name">Приватка на месяц</div><div class="price">30 дней - 130 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-priv_forever')"><span class="icon">👑</span><span class="info"><div class="name">Приватка навсегда</div><div class="price">Бессрочно - 200 Star</div></span><span class="arrow">></span></button>
-</div>
+<div class="title">КОНФИГИ</div>
+<button class="btn" onclick="g('conf_100')"><span class="ic">📄</span><span class="nm">Конфиг</span><span class="pr">100 ⭐</span></button>
+<button class="btn" onclick="g('conf_priv_175')"><span class="ic">📄</span><span class="nm">Конфиг + приватка</span><span class="pr">175 ⭐</span></button>
 
-<div id="screen-prod-priv_week" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-priv')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">ПРИВАТКА НА НЕДЕЛЮ</div>
-<div class="product-price">80 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>Доступ в приватный чат на 7 дней</li><li>Общение с владельцами без игнора</li><li>Помощь, ролики, конкурсы</li></ul></div>
-<button class="buy-btn" onclick="go('priv_week')">Купить за 80 Star</button>
-</div>
+<div class="title">СЕТЫ</div>
+<button class="btn" onclick="g('set_z5viva')"><span class="ic">⚔️</span><span class="nm">Сет z5 + вива</span><span class="pr">85 ⭐</span></button>
+<button class="btn" onclick="g('set_nerkapb')"><span class="ic">⚔️</span><span class="nm">Сет нерка + пб</span><span class="pr">200 ⭐</span></button>
 
-<div id="screen-prod-priv_month" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-priv')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">ПРИВАТКА НА МЕСЯЦ</div>
-<div class="product-price">130 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>Доступ в приватный чат на 30 дней</li><li>Общение с владельцами без игнора</li><li>Помощь, ролики, конкурсы</li></ul></div>
-<button class="buy-btn" onclick="go('priv_month')">Купить за 130 Star</button>
-</div>
+<div class="title">СКРИПТЫ</div>
+<button class="btn" onclick="g('sc_totem')"><span class="ic">🛡️</span><span class="nm">Авто тотем</span><span class="pr">25 ⭐</span></button>
+<button class="btn" onclick="g('sc_build')"><span class="ic">🧱</span><span class="nm">Застрой</span><span class="pr">25 ⭐</span></button>
+<button class="btn" onclick="g('sc_freeze')"><span class="ic">🥶</span><span class="nm">Завис</span><span class="pr">25 ⭐</span></button>
+<button class="btn" onclick="g('sc_opt')"><span class="ic">🚀</span><span class="nm">Оптимизации</span><span class="pr">25 ⭐</span></button>
 
-<div id="screen-prod-priv_forever" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-priv')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">ПРИВАТКА НАВСЕГДА</div>
-<div class="product-price">200 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>Бессрочный доступ в приватный чат</li><li>Все будущие обновления бесплатно</li><li>Помощь, ролики, конкурсы</li></ul></div>
-<button class="buy-btn" onclick="go('priv_forever')">Купить за 200 Star</button>
-</div>
+<div class="title">РЕКЛАМА</div>
+<button class="btn" onclick="g('adv_day1')"><span class="ic">📢</span><span class="nm">Реклама 1 день</span><span class="pr">65 ⭐</span></button>
+<button class="btn" onclick="g('adv_day2')"><span class="ic">📢</span><span class="nm">Реклама 2 дня</span><span class="pr">80 ⭐</span></button>
+<button class="btn" onclick="g('adv_day3')"><span class="ic">📢</span><span class="nm">Реклама 3 дня</span><span class="pr">100 ⭐</span></button>
+<button class="btn" onclick="g('adv_week')"><span class="ic">📢</span><span class="nm">Реклама неделя</span><span class="pr">150 ⭐</span></button>
 
-<div id="screen-cat-conf" class="screen">
-<div class="back-btn" onclick="showScreen('screen-main')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">КОНФИГИ</div>
-<div class="desc-box"><h3>ЧТО ЭТО</h3><ul><li>Готовые конфиги с биндами</li><li>Подходят под мобильные игры</li><li>Ставятся за 1 минуту</li><li>Без бана аккаунта</li></ul></div>
-<div class="section-title">Выбери товар</div>
-<button class="product-item" onclick="showScreen('prod-conf_100')"><span class="icon">📄</span><span class="info"><div class="name">Конфиг</div><div class="price">100 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-conf_priv_175')"><span class="icon">📄</span><span class="info"><div class="name">Конфиг + приватка</div><div class="price">175 Star</div></span><span class="arrow">></span></button>
-</div>
+<div class="title">СЕРВИС</div>
+<button class="btn" onclick="g('profile')"><span class="ic">👤</span><span class="nm">Мой профиль</span></button>
+<button class="btn" onclick="g('promos')"><span class="ic">🎫</span><span class="nm">Промокоды</span></button>
+<button class="btn" onclick="g('activate')"><span class="ic">🎁</span><span class="nm">Активировать код</span></button>
+<button class="btn" onclick="g('support')"><span class="ic">🛠️</span><span class="nm">Поддержка</span></button>
 
-<div id="screen-prod-conf_100" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-conf')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">КОНФИГ</div>
-<div class="product-price">100 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>Файл конфига (.pcfg) с биндами</li><li>Настройки под мобильные устройства</li><li>Инструкция по установке</li><li>Поддержка при проблемах</li></ul></div>
-<button class="buy-btn" onclick="go('conf_100')">Купить за 100 Star</button>
-</div>
-
-<div id="screen-prod-conf_priv_175" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-conf')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">КОНФИГ + ПРИВАТКА</div>
-<div class="product-price">175 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>Файл конфига (.pcfg)</li><li>Приватка навсегда</li><li>Инструкция по установке</li><li>Поддержка 24/7</li></ul></div>
-<button class="buy-btn" onclick="go('conf_priv_175')">Купить за 175 Star</button>
-</div>
-
-<div id="screen-cat-sets" class="screen">
-<div class="back-btn" onclick="showScreen('screen-main')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">СЕТЫ</div>
-<div class="desc-box"><h3>ЧТО ЭТО</h3><ul><li>Кастомные ПВП-сеты под твой стиль</li><li>Ты пишешь ТЗ - мы собираем</li><li>Бинды, комбо, авто-функции</li><li>Расходники включены</li></ul></div>
-<div class="section-title">Выбери базу</div>
-<button class="product-item" onclick="showScreen('prod-set_z5viva')"><span class="icon">⚔️</span><span class="info"><div class="name">Сет z5 + вива</div><div class="price">85 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-set_nerkapb')"><span class="icon">⚔️</span><span class="info"><div class="name">Сет нерка + пб</div><div class="price">200 Star</div></span><span class="arrow">></span></button>
-</div>
-
-<div id="screen-prod-set_z5viva" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-sets')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">СЕТ Z5 + ВИВА</div>
-<div class="product-price">85 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>База z5 + вива-кастом</li><li>Авто-тотем и комбо-ассист</li><li>Оптимизация FPS и пинга</li><li>Персональные бинды</li></ul></div>
-<button class="buy-btn" onclick="go('set_z5viva')">Купить за 85 Star</button>
-</div>
-
-<div id="screen-prod-set_nerkapb" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-sets')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">СЕТ НЕРКА + ПБ</div>
-<div class="product-price">200 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>База нерка + пб-кастом</li><li>Расширенные бинды и авто-функции</li><li>Оптимизация FPS и пинга</li></ul></div>
-<button class="buy-btn" onclick="go('set_nerkapb')">Купить за 200 Star</button>
-</div>
-
-<div id="screen-cat-scripts" class="screen">
-<div class="back-btn" onclick="showScreen('screen-main')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">СКРИПТЫ</div>
-<div class="desc-box"><h3>ЧТО ЭТО</h3><ul><li>LUA-скрипты для ProtoHack</li><li>Работают в один клик</li><li>Не крашат игру, не палят аккаунт</li><li>Файл .lua приходит сразу</li></ul></div>
-<div class="section-title">Выбери скрипт</div>
-<button class="product-item" onclick="showScreen('prod-sc_totem')"><span class="icon">🛡️</span><span class="info"><div class="name">Авто тотем</div><div class="price">25 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-sc_build')"><span class="icon">🧱</span><span class="info"><div class="name">Застрой</div><div class="price">25 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-sc_freeze')"><span class="icon">🥶</span><span class="info"><div class="name">Завис</div><div class="price">25 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-sc_opt')"><span class="icon">🚀</span><span class="info"><div class="name">Оптимизации</div><div class="price">25 Star</div></span><span class="arrow">></span></button>
-</div>
-
-<div id="screen-prod-sc_totem" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-scripts')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">АВТО ТОТЕМ</div>
-<div class="product-price">25 Star</div>
-<div class="desc-box"><h3>ЧТО ДЕЛАЕТ</h3><ul><li>Авто-поднятие тотема при низком HP</li><li>Настраиваемый порог HP</li><li>Работает в фоне без лагов</li></ul></div>
-<button class="buy-btn" onclick="go('sc_totem')">Купить за 25 Star</button>
-</div>
-
-<div id="screen-prod-sc_build" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-scripts')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">ЗАСТРОЙ</div>
-<div class="product-price">25 Star</div>
-<div class="desc-box"><h3>ЧТО ДЕЛАЕТ</h3><ul><li>Авто-застройка стен и блоков</li><li>Быстрый режим в 1 клик</li><li>Настройка формы и высоты</li></ul></div>
-<button class="buy-btn" onclick="go('sc_build')">Купить за 25 Star</button>
-</div>
-
-<div id="screen-prod-sc_freeze" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-scripts')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">ЗАВИС</div>
-<div class="product-price">25 Star</div>
-<div class="desc-box"><h3>ЧТО ДЕЛАЕТ</h3><ul><li>Фриз противника в ближнем бою</li><li>Работает автоматически</li><li>Безопасно для аккаунта</li></ul></div>
-<button class="buy-btn" onclick="go('sc_freeze')">Купить за 25 Star</button>
-</div>
-
-<div id="screen-prod-sc_opt" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-scripts')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">ОПТИМИЗАЦИИ</div>
-<div class="product-price">25 Star</div>
-<div class="desc-box"><h3>ЧТО ДЕЛАЕТ</h3><ul><li>FPS boost - поднимает кадры</li><li>Снижение пинга</li><li>Чистка памяти устройства</li></ul></div>
-<button class="buy-btn" onclick="go('sc_opt')">Купить за 25 Star</button>
-</div>
-
-<div id="screen-cat-adv" class="screen">
-<div class="back-btn" onclick="showScreen('screen-main')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">РЕКЛАМА</div>
-<div class="desc-box"><h3>ЧТО ЭТО</h3><ul><li>Рассылка твоей рекламы по базе бота</li><li>Текст + ссылка + кнопка</li><li>Автоматическая отправка</li></ul></div>
-<div class="section-title">Выбери срок</div>
-<button class="product-item" onclick="showScreen('prod-adv_day1')"><span class="icon">📢</span><span class="info"><div class="name">Реклама 1 день</div><div class="price">65 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-adv_day2')"><span class="icon">📢</span><span class="info"><div class="name">Реклама 2 дня</div><div class="price">80 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-adv_day3')"><span class="icon">📢</span><span class="info"><div class="name">Реклама 3 дня</div><div class="price">100 Star</div></span><span class="arrow">></span></button>
-<button class="product-item" onclick="showScreen('prod-adv_week')"><span class="icon">📢</span><span class="info"><div class="name">Реклама неделя</div><div class="price">150 Star</div></span><span class="arrow">></span></button>
-</div>
-
-<div id="screen-prod-adv_day1" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-adv')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">РЕКЛАМА 1 ДЕНЬ</div>
-<div class="product-price">65 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>Рассылка по всей базе</li><li>Текст + ссылка + кнопка</li><li>Длительность: 24 часа</li></ul></div>
-<button class="buy-btn" onclick="go('adv_day1')">Купить за 65 Star</button>
-</div>
-
-<div id="screen-prod-adv_day2" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-adv')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">РЕКЛАМА 2 ДНЯ</div>
-<div class="product-price">80 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>Рассылка по всей базе</li><li>Текст + ссылка + кнопка</li><li>Длительность: 48 часов</li></ul></div>
-<button class="buy-btn" onclick="go('adv_day2')">Купить за 80 Star</button>
-</div>
-
-<div id="screen-prod-adv_day3" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-adv')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">РЕКЛАМА 3 ДНЯ</div>
-<div class="product-price">100 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>Рассылка по всей базе</li><li>Текст + ссылка + кнопка</li><li>Длительность: 72 часа</li></ul></div>
-<button class="buy-btn" onclick="go('adv_day3')">Купить за 100 Star</button>
-</div>
-
-<div id="screen-prod-adv_week" class="screen">
-<div class="back-btn" onclick="showScreen('screen-cat-adv')"><span class="arr">&lt;</span> Назад</div>
-<div class="product-title">РЕКЛАМА НЕДЕЛЯ</div>
-<div class="product-price">150 Star</div>
-<div class="desc-box"><h3>ЧТО ВХОДИТ</h3><ul><li>Рассылка по всей базе</li><li>Текст + ссылка + кнопка</li><li>Длительность: 7 дней</li></ul></div>
-<button class="buy-btn" onclick="go('adv_week')">Купить за 150 Star</button>
-</div></div>
-
-<script>
+</div><script>
 var tg = window.Telegram ? window.Telegram.WebApp : null;
-
-(function () {
-    var c = document.getElementById("stars");
-    for (var i = 0; i < 60; i++) {
-        var s = document.createElement("div");
-        s.className = "star";
-        s.style.left = Math.random() * 100 + "%";
-        s.style.top = Math.random() * 100 + "%";
-        var sz = Math.random() * 2 + 1;
-        s.style.width = sz + "px";
-        s.style.height = sz + "px";
-        s.style.animationDelay = Math.random() * 3 + "s";
-        c.appendChild(s);
-    }
-})();
-
-if (tg) {
-    tg.ready();
-    tg.expand();
-}
-
-function showScreen(id) {
-    var screens = document.querySelectorAll(".screen");
-    for (var i = 0; i < screens.length; i++) {
-        screens[i].classList.remove("active");
-    }
-    var el = document.getElementById(id);
-    if (el) {
-        el.classList.add("active");
-        window.scrollTo(0, 0);
-    }
-    if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
-}
-
-function go(target) {
+if (tg) { tg.ready(); tg.expand(); }
+function g(target) {
     if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred("medium");
-    if (!tg) {
-        window.location.href = "https://t.me/XMPrivateBot";
-        return;
-    }
+    if (!tg) { window.location.href = "https://t.me/XMPrivateBot"; return; }
     try {
         tg.sendData(JSON.stringify({ action: "go", target: target }));
         setTimeout(function(){ tg.close(); }, 300);
-    } catch(e) {
-        window.location.href = "https://t.me/XMPrivateBot";
-    }
+    } catch(e) { window.location.href = "https://t.me/XMPrivateBot"; }
 }
 </script>
 </body>

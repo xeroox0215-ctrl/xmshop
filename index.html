@@ -1,76 +1,568 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XMprivat SHOP</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #000;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-        }
-        h1 {
-            font-size: 48px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, #fff 0%, #888 50%, #fff 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-        }
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
-        p {
-            color: #888;
-            font-size: 16px;
-            margin-bottom: 40px;
-        }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            margin-bottom: 12px;
-            background: #111;
-            color: #fff;
-            border: 1px solid #333;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn:hover {
-            background: #222;
-            border-color: #666;
-            transform: translateY(-2px);
-        }
-        .emoji { font-size: 22px; margin-right: 10px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>XMprivat SHOP</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    user-select: none;
+}
+#stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+.star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkle 3s infinite ease-in-out;
+}
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+.app {
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+    min-height: 100vh;
+}
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+    animation: fadeIn 0.8s ease-out;
+}
+.logo h1 {
+    font-size: 38px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #fff 0%, #00e0ff 50%, #fff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+}
+.logo p {
+    color: #555;
+    font-size: 12px;
+    letter-spacing: 4px;
+    margin-top: 6px;
+}
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.menu-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    background: rgba(20, 20, 20, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.6s ease-out backwards;
+    text-align: left;
+}
+.menu-btn:active {
+    transform: scale(0.97);
+    background: rgba(0, 224, 255, 0.1);
+    border-color: rgba(0, 224, 255, 0.4);
+}
+.menu-btn .icon {
+    font-size: 24px;
+    margin-right: 16px;
+    width: 30px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+.menu-btn:active .icon {
+    transform: scale(1.2) rotate(-5deg);
+}
+.menu-btn .arrow {
+    margin-left: auto;
+    color: #555;
+    font-size: 18px;
+    transition: transform 0.3s;
+}
+.menu-btn:active .arrow {
+    transform: translateX(4px);
+    color: #00e0ff;
+}
+.menu-btn:nth-child(1) { animation-delay: 0.05s; }
+.menu-btn:nth-child(2) { animation-delay: 0.1s; }
+.menu-btn:nth-child(3) { animation-delay: 0.15s; }
+.menu-btn:nth-child(4) { animation-delay: 0.2s; }
+.menu-btn:nth-child(5) { animation-delay: 0.25s; }
+.menu-btn:nth-child(6) { animation-delay: 0.3s; }
+.menu-btn:nth-child(7) { animation-delay: 0.35s; }
+.menu-btn:nth-child(8) { animation-delay: 0.4s; }
+.menu-btn:nth-child(9) { animation-delay: 0.45s; }
+.menu-btn.admin {
+    background: linear-gradient(135deg, rgba(0, 224, 255, 0.15), rgba(0, 150, 255, 0.15));
+    border: 1px solid rgba(0, 224, 255, 0.4);
+    box-shadow: 0 0 20px rgba(0, 224, 255, 0.2);
+}
+.page {
+    display: none;
+    animation: slideIn 0.35s ease-out;
+}
+.page.active {
+    display: block;
+}
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.back-btn:active {
+    transform: scale(0.95);
+    background: rgba(0, 224, 255, 0.15);
+}
+.page-title {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #fff, #00e0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.page-desc {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+.card {
+    padding: 18px;
+    margin-bottom: 12px;
+    background: rgba(20, 20, 20, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    transition: all 0.25s;
+    animation: fadeIn 0.5s ease-out backwards;
+}
+.card:active {
+    transform: scale(0.98);
+}
+.card-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+.card-desc {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 14px;
+    line-height: 1.5;
+}
+.card-price {
+    font-size: 20px;
+    font-weight: 800;
+    color: #00e0ff;
+    margin-bottom: 12px;
+}
+.buy-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #00e0ff, #0099ff);
+    border: none;
+    border-radius: 10px;
+    color: #000;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    letter-spacing: 0.5px;
+}
+.buy-btn:active {
+    transform: scale(0.97);
+    filter: brightness(0.9);
+}
+.profile-card {
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(0, 224, 255, 0.1), rgba(0, 80, 200, 0.05));
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: fadeIn 0.6s;
+}
+.profile-name {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+.profile-id {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 16px;
+}
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.stat {
+    text-align: center;
+}
+.stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: #00e0ff;
+}
+.stat-label {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.loader {
+    text-align: center;
+    padding: 40px;
+    color: #555;
+}
+.loader::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin: 16px auto 0;
+    border: 3px solid rgba(0, 224, 255, 0.2);
+    border-top-color: #00e0ff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>XMprivat</h1>
-        <p>Mini App запускается...</p>
-        <button class="btn" onclick="alert('Работает!')"><span class="emoji">👑</span>Приватка</button>
-        <button class="btn" onclick="alert('Работает!')"><span class="emoji">📄</span>Конфиг</button>
-        <button class="btn" onclick="alert('Работает!')"><span class="emoji">⚔️</span>Сеты</button>
-        <button class="btn" onclick="alert('Работает!')"><span class="emoji">📜</span>Скрипты</button>
+<div id="stars"></div>
+<div class="app">
+    <div class="logo">
+        <h1>XMPRIVAT</h1>
+        <p>SHOP</p>
     </div>
+
+    <!-- ГЛАВНОЕ МЕНЮ -->
+    <div id="main" class="page active">
+        <button class="menu-btn" onclick="showPage('priv')">
+            <span class="icon">👑</span> Приватка
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="showPage('conf')">
+            <span class="icon">📄</span> Конфиг
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="showPage('sets')">
+            <span class="icon">⚔️</span> Сеты
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="showPage('scripts')">
+            <span class="icon">📜</span> Скрипты
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="showPage('profile')">
+            <span class="icon">👤</span> Мой профиль
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="showPage('key')">
+            <span class="icon">🎁</span> Активировать код
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="showPage('faq')">
+            <span class="icon">❓</span> FAQ
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="showPage('support')">
+            <span class="icon">🛠️</span> Поддержка
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="showPage('reviews')">
+            <span class="icon">⭐</span> Отзывы
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn admin" id="adminBtn" onclick="showPage('admin')" style="display:none">
+            <span class="icon">👑</span> АДМИН-ПАНЕЛЬ
+            <span class="arrow">›</span>
+        </button>
+    </div>
+
+    <!-- ПРИВАТКА -->
+    <div id="priv" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">👑 Приватка</div>
+        <div class="page-desc">Общение с владельцами, помощь, ролики, конкурсы</div>
+        <div class="card">
+            <div class="card-title">⏱️ На неделю</div>
+            <div class="card-desc">Полный доступ на 7 дней</div>
+            <div class="card-price">⭐ 80</div>
+            <button class="buy-btn" onclick="buy('pay_s_priv_week_80')">Купить</button>
+        </div>
+        <div class="card">
+            <div class="card-title">📅 На месяц</div>
+            <div class="card-desc">Полный доступ на 30 дней</div>
+            <div class="card-price">⭐ 130</div>
+            <button class="buy-btn" onclick="buy('pay_s_priv_month_130')">Купить</button>
+        </div>
+        <div class="card">
+            <div class="card-title">👑 Навсегда</div>
+            <div class="card-desc">Пожизненный доступ</div>
+            <div class="card-price">⭐ 200</div>
+            <button class="buy-btn" onclick="buy('pay_s_priv_forever_200')">Купить</button>
+        </div>
+    </div>
+
+    <!-- КОНФИГ -->
+    <div id="conf" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">📄 Конфиг</div>
+        <div class="page-desc">Персональные настройки под твой стиль</div>
+        <div class="card">
+            <div class="card-title">📄 Конфиг</div>
+            <div class="card-desc">Файл настроек с биндами и авто-тотемом</div>
+            <div class="card-price">⭐ 100</div>
+            <button class="buy-btn" onclick="buy('pay_s_conf_100')">Купить</button>
+        </div>
+        <div class="card">
+            <div class="card-title">📄 Конфиг + Приватка</div>
+            <div class="card-desc">Конфиг + приватка навсегда</div>
+            <div class="card-price">⭐ 175</div>
+            <button class="buy-btn" onclick="buy('pay_s_conf_priv_175')">Купить</button>
+        </div>
+    </div>
+
+    <!-- СЕТЫ -->
+    <div id="sets" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">⚔️ Сеты</div>
+        <div class="page-desc">Кастомные сборки под ПВП</div>
+        <div class="card">
+            <div class="card-title">🔥 Сет z5 + вива</div>
+            <div class="card-desc">Кастомная сборка с биндами и комбо</div>
+            <div class="card-price">⭐ 85</div>
+            <button class="buy-btn" onclick="buy('pay_s_z5viva_85')">Купить</button>
+        </div>
+        <div class="card">
+            <div class="card-title">⚡ Сет нерка + пб</div>
+            <div class="card-desc">Расширенный кастом с авто-функциями</div>
+            <div class="card-price">⭐ 200</div>
+            <button class="buy-btn" onclick="buy('pay_s_nerkapb_200')">Купить</button>
+        </div>
+    </div>
+
+    <!-- СКРИПТЫ -->
+    <div id="scripts" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">📜 Скрипты</div>
+        <div class="page-desc">LUA-скрипты для ProtoHack</div>
+        <div class="card">
+            <div class="card-title">🛡️ Авто тотем</div>
+            <div class="card-desc">Авто-поднятие тотема при низком HP</div>
+            <div class="card-price">⭐ 25</div>
+            <button class="buy-btn" onclick="buy('pay_s_sc_totem_25')">Купить</button>
+        </div>
+        <div class="card">
+            <div class="card-title">🧱 Застрой</div>
+            <div class="card-desc">Авто-застройка стен вокруг тебя</div>
+            <div class="card-price">⭐ 25</div>
+            <button class="buy-btn" onclick="buy('pay_s_sc_build_25')">Купить</button>
+        </div>
+        <div class="card">
+            <div class="card-title">🥶 Завис</div>
+            <div class="card-desc">Фриз противника в ближнем бою</div>
+            <div class="card-price">⭐ 25</div>
+            <button class="buy-btn" onclick="buy('pay_s_sc_freeze_25')">Купить</button>
+        </div>
+        <div class="card">
+            <div class="card-title">🚀 Оптимизации</div>
+            <div class="card-desc">FPS boost, снижение пинга</div>
+            <div class="card-price">⭐ 25</div>
+            <button class="buy-btn" onclick="buy('pay_s_sc_opt_25')">Купить</button>
+        </div>
+    </div>
+
+    <!-- ПРОФИЛЬ -->
+    <div id="profile" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">👤 Мой профиль</div>
+        <div id="profileContent" class="loader">Загрузка</div>
+    </div>
+
+    <!-- АКТИВИРОВАТЬ КОД -->
+    <div id="key" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">🎁 Активировать код</div>
+        <div class="page-desc">Введи ключ или промокод</div>
+        <div class="card">
+            <input id="keyInput" type="text" placeholder="XM-1-XXXXXX" style="width:100%;padding:14px;background:#111;border:1px solid #333;border-radius:10px;color:#fff;font-size:16px;margin-bottom:12px;outline:none;text-transform:uppercase;">
+            <button class="buy-btn" onclick="activateKey()">Активировать</button>
+        </div>
+    </div>
+
+    <!-- FAQ -->
+    <div id="faq" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">❓ FAQ</div>
+        <div id="faqContent" class="loader">Загрузка</div>
+    </div>
+
+    <!-- ПОДДЕРЖКА -->
+    <div id="support" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">🛠️ Поддержка</div>
+        <div class="page-desc">Напиши вопрос — ответим за 15 минут</div>
+        <div class="card">
+            <textarea id="supportInput" placeholder="Опиши свою проблему..." style="width:100%;min-height:120px;padding:14px;background:#111;border:1px solid #333;border-radius:10px;color:#fff;font-size:15px;margin-bottom:12px;outline:none;resize:vertical;font-family:inherit;"></textarea>
+            <button class="buy-btn" onclick="sendSupport()">Отправить</button>
+        </div>
+    </div>
+
+    <!-- ОТЗЫВЫ -->
+    <div id="reviews" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">⭐ Отзывы</div>
+        <div id="reviewsContent" class="loader">Загрузка</div>
+    </div>
+
+    <!-- АДМИНКА -->
+    <div id="admin" class="page">
+        <button class="back-btn" onclick="showPage('main')">‹ Назад</button>
+        <div class="page-title">👑 Админ-панель</div>
+        <div class="page-desc">Только для владельцев</div>
+        <button class="menu-btn" onclick="adminAction('stats')">
+            <span class="icon">📊</span> Статистика
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="adminAction('orders')">
+            <span class="icon">📋</span> Заказы
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="adminAction('keys')">
+            <span class="icon">🎉</span> Ключи
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="adminAction('bans')">
+            <span class="icon">🚫</span> Баны
+            <span class="arrow">›</span>
+        </button>
+        <button class="menu-btn" onclick="adminAction('broadcast')">
+            <span class="icon">📢</span> Рассылка
+            <span class="arrow">›</span>
+        </button>
+        <div id="adminContent" style="margin-top:16px"></div>
+    </div>
+</div>
+
+<script>
+// Звёзды на фоне
+function createStars() {
+    const c = document.getElementById('stars');
+    for (let i = 0; i < 60; i++) {
+        const s = document.createElement('div');
+        s.className = 'star';
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top = Math.random() * 100 + '%';
+        const size = Math.random() * 2 + 1;
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.animationDelay = Math.random() * 3 + 's';
+        c.appendChild(s);
+    }
+}
+createStars();
+
+// Telegram
+const tg = window.Telegram?.WebApp;
+if (tg) {
+    tg.ready();
+    tg.expand();
+}
+
+// Показать страницу
+function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if (tg) tg.HapticFeedback?.impactOccurred('light');
+    window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// Купить
+function buy(payload) {
+    if (tg) tg.HapticFeedback?.notificationOccurred('success');
+    if (tg) tg.sendData(JSON.stringify({action:'buy', payload: payload}));
+    if (tg) tg.close();
+}
+
+// Активировать ключ
+function activateKey() {
+    const k = document.getElementById('keyInput').value.trim().toUpperCase();
+    if (!k) return;
+    if (tg) tg.sendData(JSON.stringify({action:'activate', code: k}));
+    if (tg) tg.close();
+}
+
+// Поддержка
+function sendSupport() {
+    const t = document.getElementById('supportInput').value.trim();
+    if (!t) return;
+    if (tg) tg.sendData(JSON.stringify({action:'support', text: t}));
+    if (tg) tg.close();
+}
+
+// Админ-действие
+function adminAction(a) {
+    if (tg) tg.sendData(JSON.stringify({action:'admin', type: a}));
+    if (tg) tg.close();
+}
+
+// Проверка админа
+const ADMIN_IDS = [1494459013, 6432939703];
+if (tg && tg.initDataUnsafe?.user) {
+    const uid = tg.initDataUnsafe.user.id;
+    if (ADMIN_IDS.includes(uid)) {
+        document.getElementById('adminBtn').style.display = 'flex';
+    }
+}
+</script>
 </body>
 </html>
